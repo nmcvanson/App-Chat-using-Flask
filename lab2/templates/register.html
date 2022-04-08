@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="utf-8">
+    <title>
+        Registration Form
+    </title>
+    <style type="text/css">
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 10px 0;
+            border: none;
+            cursor: pointer;
+            width:  100%;
+        }
+        button:hover {
+            opacity: 0.8;
+        }
+        input[type=text], input[type=password]{
+            width: 100%;
+            margin: 8px 0;
+            padding: 12px 20px;
+            display: inline-block;
+            border: 2px solid green;
+            box-sizing: border-box;
+
+        }
+    </style>
+<head>
+<body>
+    <h1> Registration Form:</h1>
+    <form action ="register_check" method="POST">
+        <table>
+            <tr>
+                <td>
+                    <label> Username: </label>
+                </td>
+                <td>
+                    <input type="Text" name = 'uid' placeholder="Enter a Username"
+                    >
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label> Password: </label>
+                </td>
+                <td>
+                    <input type="password" name = 'password' placeholder="Enter a password"
+                    >
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="Submit"> Register </button>
+                </td>
+            </tr>
+        </table>
+    </form>
+    Already have an account? <a href="login"> Login </a>
+    <br/>
+    <a href="home"> Home </a>
+</body>
+</head>
+</html>

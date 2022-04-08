@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="{{url_for('static', filename = 'style.css')}}">
+    <title> Cloud </title>
+</head>
+<body>
+    <div class="container">
+        <div class="top_panel">
+            <table width = "100%" >
+                <tr>
+                    <td style="text-align: left;" width = "75%">
+                        <h1 style="margin-left:  20px;"> <font color="blue">
+                            {{uid}}'s </font> Page
+                        </h1>
+                    </td>
+                    <td style="text-align: center;">
+                        <a href = "{{url_for('logout', user_id = uid)}}"><button class="logout" style="background-color: rgb(241, 25, 25);">  Logout </button></a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="left_panel">
+            <table width = "100%" border="1px">
+                <tr>
+                    <td style="text-align: center;">
+                        <a href="{{url_for('list_user', user_id = uid)}}"> <button class="btn">
+                            <h3>
+                                List User
+                            </h3>
+                        </button></a>
+                        <div class = "vertical-menu">  
+                            {% for user in user_list %}
+                                <a href="{{url_for('update_cid', user_id = uid, chat_id = user)}}"> {{user}}</a>
+                            {% endfor %}  
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">
+                        <a href="{{url_for('list_group', user_id = uid)}}"><button class="btn">
+                            <h3>
+                                List Group
+                            </h3>
+                        </button></a>
+                        <div class = "vertical-menu"> 
+                            {% for group in group_list %}
+                                <a href="{{url_for('update_cid', user_id = uid, chat_id = group)}}"> {{group}}</a>
+                            {% endfor %}  
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+        <div class="right_top_panel">
+            <table width ="100%" border="1px">
+                <tr>
+                    <td>
+                        <table>
+                            <tr>
+                                <td>
+                                    <h2> <font  color="Purple"> Chat box </font> </h2>
+                                </td>   
+                                <td>
+                                    <a href="{{url_for('list_messages', user_id = uid)}}">
+                                    <button class = 'btn' style='width:100%'> List Message </button> </a>
+                                </td>
+                                <td>
+                                    <button class = 'btn' style='width:100%' onclick="window.location.reload();"> Refresh </button>
+                                </td>
+                            </tr>
+                        </table>
+                        <h1 style="color: green"> Chat with: {{cid}} </h1>
+                        <table width="100%" border="1px" style="font-size: 25px; font-weight: bold;">
+                            <tr>
+                                    <td width = "60%" style="text-align: center;">
+                                        Message Text
+                                    </td>
+                                    <td width = "10%" style="text-align: center;">
+                                        Sender ID
+                                    </td>
+                                    <td width = "20%" style="text-align: center;">
+                                        Time
+                                    </td>
+                                    <td width = "10%" style="text-align: center;">
+                                        Message ID
+                                    </td>
+                                </tr>
+                        </table>
+                        
+                        <div class = "vertical-menu2" id = "chat_window">
+                            <table width="100%" border="1px" style="font-size: 25px">
+                                
+                                {% for msg in msg_list %}
+                                    <tr>
+                                        <td width = "60%">
+                                            {{ msg_list[msg]['text']}}
+                                        </td>
+                                        <td width = "10%" style="text-align: center;">
+                                            {{ msg_list[msg]['send_uid']}}
+                                        </td>
+                                        <td width = "20%" style="text-align: center;">
+                                            {{ msg_list[msg]['timestamp']}}
+                                        </td>
+                                        <td width = "10%" style="text-align: center;">
+                                            {{ msg }}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </table>    
+                        </div>
+                        
+                        <script>
+                            chatWindow = document.getElementById('chat_window');
+                            var xH = chatWindow.scrollHeight;
+                            chatWindow.scrollTo(0, xH)
+                        </script>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+        <div class="right_bottom_panel">
+            <form action="{{url_for('send_msg', user_id = uid)}}" method = "POST">
+            <table width ="100%" >
+                <tr>
+                    <td width ="70%">
+                        <input type="text" name="typed_msg" placeholder="Type a message..."/>
+                        
+                    </td>
+                    <td>
+                        <button class="logout">Send</button>
+                    </td>
+                </tr>
+            </table>
+            </form>
+            <table width = "100%">
+                <tr>
+                    <td width = '40%'>
+                        <button style="font-size: 20px;" onclick="openDeleteMsg()"> Delete Message </button>
+                        <div id = "delete_div" hidden>
+                            <form action="{{url_for('delete_msg', user_id = uid) }}" method = 'POST'>
+                                <table width = "30%">
+                                    <tr>
+                                        <td width = '100%'>
+                                            <input type = 'text' name = 'msg_id' placeholder="Message ID"/>
+                                        </td>
+                                        <td >
+                                            <button class="btn2" type = 'submit'> Delete</button>
+                                        </td>
+                                        <td> <button class="btn2" onclick="closeDeleteMsg()"> Close </button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </form>
+
+                        </div>
+                        <script>
+                            function openDeleteMsg(){
+                                document.getElementById('delete_div').style.display = 'block'
+                            }
+                            function closeDeleteMsg(){
+                                document.getElementById('delete_div').style.display = 'none'
+                            }
+                        </script>
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+</body>
+</html>
